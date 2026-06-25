@@ -3,623 +3,460 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KAVY LOGISTICS — Software de gestión de bodega e inventario (WMS)</title>
-  <meta name="description" content="KAVY LOGISTICS es el WMS que controla tu bodega de punta a punta: recepción con fotos, ubicación por código de barras, despachos y auditoría de inventario en tiempo real. Menos errores, trazabilidad total." />
-  <meta name="theme-color" content="#0E2A47" />
+  <title>KAVY CORP — Software que mueve tu negocio</title>
+  <meta name="description" content="KAVY CORP construye software para empresas colombianas: logística de bodega, ventas con IA y verificación de pagos. Tres herramientas, una empresa de confianza." />
+  <meta name="theme-color" content="#F5F0E6" />
   <link rel="canonical" href="https://kavycorp.com/" />
-
-  <!-- Open Graph / redes -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="KAVY LOGISTICS — Control total de tu bodega" />
-  <meta property="og:description" content="WMS para recepción, ubicación, despacho y auditoría de inventario en tiempo real." />
+  <meta property="og:title" content="KAVY CORP — Software que mueve tu negocio" />
+  <meta property="og:description" content="Logística, ventas con IA y verificación de pagos. Software hecho en Colombia." />
   <meta property="og:url" content="https://kavycorp.com/" />
   <meta property="og:locale" content="es_CO" />
 
-  <!-- Favicon inline (caja sobre base = logística) -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E2A47'/%3E%3Cpath d='M16 6l8 4.5v9L16 24l-8-4.5v-9z' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M8 10.5l8 4.5 8-4.5M16 15v9' stroke='%23FF6B35' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23FF5C28'/%3E%3Cpath d='M10 7v18M10 16l11-9M10 16l11 9' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-       MARCA KAVY LOGISTICS — cambia los hex aquí y se actualiza todo
-       (Base azul marino logístico dominante + naranja KAVY de acento)
-       ============================================================ */
     :root {
-      --navy:       #0E2A47;   /* base dominante */
-      --navy-700:   #14365C;
-      --navy-600:   #1E3A5F;   /* heredado de la app SILOG */
-      --accent:     #FF6B35;   /* acento KAVY — CTAs y datos clave */
-      --accent-700: #E85826;
-      --cyan:       #2BB7C7;   /* secundario: "movimiento de carga" */
-      --ink:        #0F1A24;
-      --muted:      #5A6B7B;
-      --line:       #E3E9EF;
-      --surface:    #F4F7FA;
-      --white:      #FFFFFF;
-      --ok:         #1FA463;
-
-      --radius:     16px;
-      --radius-sm:  10px;
-      --shadow:     0 10px 30px rgba(14, 42, 71, .10);
-      --shadow-lg:  0 24px 60px rgba(14, 42, 71, .18);
-      --maxw:       1140px;
-      --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --bg:      #F5F0E6;
+      --bg2:     #EFE8D8;
+      --ink:     #15110C;
+      --orange:  #FF5C28;
+      --cyan:    #1AAEC2;
+      --green:   #1FA84B;
+      --purple:  #6C4DF2;
+      --yellow:  #FFC83D;
+      --shadow:  5px 5px 0 var(--ink);
+      --shadow-lg: 8px 8px 0 var(--ink);
+      --shadow-sm: 3px 3px 0 var(--ink);
+      --bd:      2.5px solid var(--ink);
+      --disp:    'Syne', sans-serif;
+      --body:    'Space Grotesk', system-ui, sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: var(--font);
-      color: var(--ink);
-      background: var(--white);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      font-family: var(--body); background: var(--bg); color: var(--ink);
+      line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+      position: relative;
     }
+    a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    h1, h2, h3 { line-height: 1.15; letter-spacing: -.02em; }
+    ::selection { background: var(--orange); color: #fff; }
 
-    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-      color: var(--accent);
+    /* ── Paper grain ── */
+    .grain {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      opacity: .42; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 140px;
     }
-    .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--accent); display: inline-block; }
-    .muted { color: var(--muted); }
 
-    /* ---------- Botones ---------- */
+    .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+    section { position: relative; z-index: 2; }
+
+    /* ── Floating organic shapes ── */
+    .shape { position: absolute; z-index: 1; pointer-events: none; will-change: transform; }
+    .shape svg { display: block; }
+    @keyframes spin     { to { transform: rotate(360deg); } }
+    @keyframes spinRev  { to { transform: rotate(-360deg); } }
+    @keyframes bobble   { 0%,100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-18px) rotate(8deg); } }
+
+    /* ── Buttons ── */
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-      font-weight: 700; font-size: 15px; padding: 14px 24px; border-radius: 12px;
-      border: 2px solid transparent; cursor: pointer; transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--disp); font-weight: 700; font-size: 15px;
+      padding: 14px 26px; border: var(--bd); border-radius: 100px;
+      cursor: pointer; transition: transform .12s ease, box-shadow .12s ease;
+      background: #fff; color: var(--ink); box-shadow: var(--shadow);
     }
-    .btn:active { transform: translateY(1px); }
-    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 20px rgba(255,107,53,.32); }
-    .btn-primary:hover { background: var(--accent-700); box-shadow: 0 12px 26px rgba(255,107,53,.4); }
-    .btn-ghost { background: transparent; color: var(--white); border-color: rgba(255,255,255,.35); }
-    .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,.08); }
-    .btn-dark { background: var(--navy); color: #fff; }
-    .btn-dark:hover { background: var(--navy-700); }
-    .btn-wa { background: #25D366; color: #0b3d2c; }
-    .btn-wa:hover { filter: brightness(1.05); }
+    .btn:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--ink); }
+    .btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn-orange { background: var(--orange); color: #fff; }
+    .btn-ink    { background: var(--ink); color: var(--bg); }
 
-    /* ---------- Header ---------- */
-    header.nav {
-      position: sticky; top: 0; z-index: 50;
-      background: rgba(14,42,71,.92); backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+    /* ── HEADER ── */
+    header { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: var(--bd); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand-icon { width: 40px; height: 40px; border: var(--bd); border-radius: 9px; flex: 0 0 auto; box-shadow: var(--shadow-sm); }
+    .brand-txt { font-family: var(--disp); font-weight: 800; font-size: 20px; letter-spacing: -.02em; line-height: 1; }
+    .brand-txt small { display: block; font-family: var(--body); font-weight: 600; font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--orange); margin-top: 3px; }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a { font-family: var(--disp); font-weight: 600; font-size: 15px; transition: color .12s; }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .nav-toggle { display: none; background: none; border: 0; color: var(--ink); cursor: pointer; }
+
+    /* ── HERO ── */
+    .hero { padding: 86px 0 70px; position: relative; overflow: hidden; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--disp); font-weight: 700; font-size: 13px; letter-spacing: .04em;
+      background: var(--yellow); color: var(--ink); border: var(--bd); box-shadow: var(--shadow-sm);
+      padding: 7px 16px; border-radius: 100px; margin-bottom: 30px;
     }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
-    .brand { display: flex; align-items: center; gap: 11px; color: #fff; }
-    .brand .mark { width: 36px; height: 36px; flex: 0 0 auto; }
-    .brand b { font-weight: 800; font-size: 18px; letter-spacing: -.01em; }
-    .brand span { font-weight: 600; font-size: 11px; letter-spacing: .22em; color: var(--accent); display: block; margin-top: -2px; }
-    .nav-links { display: flex; align-items: center; gap: 28px; }
-    .nav-links a { color: rgba(255,255,255,.82); font-weight: 500; font-size: 15px; transition: color .15s; }
-    .nav-links a:hover { color: #fff; }
-    .nav-cta { display: flex; align-items: center; gap: 12px; }
-    .nav-toggle { display: none; background: none; border: 0; color: #fff; cursor: pointer; }
-
-    /* ---------- Hero ---------- */
-    .hero {
-      position: relative; color: #fff;
-      background:
-        radial-gradient(1200px 500px at 80% -10%, rgba(43,183,199,.18), transparent 60%),
-        radial-gradient(900px 500px at 0% 110%, rgba(255,107,53,.16), transparent 55%),
-        linear-gradient(160deg, var(--navy) 0%, #0A2138 100%);
-      overflow: hidden;
+    .hero h1 {
+      font-family: var(--disp); font-weight: 800;
+      font-size: clamp(48px, 9.5vw, 122px); line-height: .92; letter-spacing: -.04em;
+      margin-bottom: 30px; position: relative;
     }
-    .hero::after {
-      content: ""; position: absolute; inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 46px 46px; mask-image: radial-gradient(900px 500px at 70% 20%, #000, transparent 75%);
-      pointer-events: none;
+    .hero h1 .mueve {
+      display: inline-block; position: relative; color: var(--orange);
+      transform: rotate(-2.5deg);
     }
-    .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; padding: 84px 0 96px; }
-    .hero h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 800; margin: 18px 0 18px; }
-    .hero h1 .hl { color: var(--accent); }
-    .hero p.lead { font-size: clamp(17px, 2vw, 20px); color: rgba(255,255,255,.84); max-width: 560px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
-    .hero-trust { display: flex; flex-wrap: wrap; gap: 22px 34px; margin-top: 40px; color: rgba(255,255,255,.78); font-size: 14px; }
-    .hero-trust div { display: flex; align-items: center; gap: 9px; }
-    .hero-trust svg { color: var(--cyan); }
-
-    /* mockup app */
-    .device {
-      position: relative; justify-self: center; width: 280px; aspect-ratio: 280/580;
-      background: linear-gradient(180deg, #11304f, #0c2238);
-      border: 10px solid #0a1c2e; border-radius: 38px; box-shadow: var(--shadow-lg);
-      padding: 16px 14px; color: #fff;
+    .hero h1 .mueve::after {
+      content: ''; position: absolute; left: -4px; right: -4px; bottom: 6px; height: 14px;
+      background: var(--yellow); z-index: -1; transform: rotate(1deg);
     }
-    .device .scr-head { display: flex; align-items: center; justify-content: space-between; background: var(--accent); margin: -4px -6px 14px; padding: 14px 14px; border-radius: 14px; font-weight: 700; font-size: 13px; }
-    .device .scr-head small { font-weight: 600; opacity: .85; }
-    .kpi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-    .kpi { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 11px 12px; }
-    .kpi b { font-size: 22px; display: block; }
-    .kpi span { font-size: 10.5px; color: rgba(255,255,255,.6); }
-    .row-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.05); border-radius: 10px; padding: 9px 11px; margin-bottom: 8px; font-size: 12px; }
-    .row-item .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: 0 0 auto; }
-    .row-item .dot.warn { background: var(--accent); }
-    .row-item .tag { margin-left: auto; font-size: 10px; color: rgba(255,255,255,.6); }
-    .float-badge { position: absolute; background: #fff; color: var(--navy); border-radius: 12px; box-shadow: var(--shadow-lg); padding: 10px 13px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-    .float-badge svg { color: var(--accent); }
-    .fb-1 { top: 40px; left: -40px; }
-    .fb-2 { bottom: 56px; right: -46px; }
-
-    /* ---------- Secciones genéricas ---------- */
-    section { padding: 92px 0; }
-    .section-head { max-width: 720px; margin: 0 auto 56px; text-align: center; }
-    .section-head h2 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; margin: 14px 0 14px; color: var(--navy); }
-    .section-head p { font-size: 18px; color: var(--muted); }
-
-    /* logos / cinta de confianza */
-    .strip { background: var(--navy); color: rgba(255,255,255,.7); padding: 22px 0; }
-    .strip .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 40px; font-weight: 600; font-size: 14px; }
-    .strip b { color: #fff; }
-
-    /* problema */
-    .pain { background: var(--surface); }
-    .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-    .pain-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
-    .pain-card .ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,107,53,.1); color: var(--accent); margin-bottom: 16px; }
-    .pain-card h3 { font-size: 18px; color: var(--navy); margin-bottom: 8px; }
-    .pain-card p { color: var(--muted); font-size: 15px; }
-
-    /* módulos */
-    .mod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-    .mod-card {
-      background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s;
+    .hero h1 .outline {
+      -webkit-text-stroke: 2.5px var(--ink); -webkit-text-fill-color: transparent;
     }
-    .mod-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: #d4dde6; }
-    .mod-card .ic { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: var(--navy); color: #fff; margin-bottom: 18px; }
-    .mod-card:nth-child(3n+2) .ic { background: var(--accent); }
-    .mod-card:nth-child(3n) .ic { background: var(--cyan); }
-    .mod-card h3 { font-size: 19px; color: var(--navy); margin-bottom: 10px; }
-    .mod-card p { color: var(--muted); font-size: 15px; }
+    .hero-lead { font-size: clamp(17px, 2.1vw, 21px); max-width: 540px; margin-bottom: 38px; color: #463f33; font-weight: 500; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
 
-    /* cómo funciona */
-    .how { background: var(--navy); color: #fff; }
-    .how .section-head h2 { color: #fff; }
-    .how .section-head p { color: rgba(255,255,255,.72); }
-    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; counter-reset: step; }
-    .step { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius); padding: 26px 22px; position: relative; }
-    .step .n { counter-increment: step; width: 40px; height: 40px; border-radius: 11px; background: var(--accent); color: #fff; font-weight: 800; display: grid; place-items: center; margin-bottom: 16px; }
-    .step .n::before { content: counter(step); }
-    .step h3 { font-size: 17px; margin-bottom: 8px; }
-    .step p { color: rgba(255,255,255,.72); font-size: 14.5px; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; }
 
-    /* beneficios */
-    .ben-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-    .ben-list { display: grid; gap: 20px; }
-    .ben { display: flex; gap: 16px; }
-    .ben .ck { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 11px; background: rgba(31,164,99,.12); color: var(--ok); display: grid; place-items: center; }
-    .ben h3 { font-size: 17px; color: var(--navy); margin-bottom: 4px; }
-    .ben p { color: var(--muted); font-size: 15px; }
-    .stat-card { background: linear-gradient(160deg, var(--navy), #0A2138); color: #fff; border-radius: 22px; padding: 40px; box-shadow: var(--shadow-lg); }
-    .stat-card .big { font-size: 56px; font-weight: 800; color: var(--accent); line-height: 1; }
-    .stat-card .row { display: flex; gap: 14px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
-    .stat-card .row:last-child { border-bottom: 0; }
-    .stat-card .row b { font-size: 26px; min-width: 76px; color: var(--cyan); }
-    .stat-card .row span { color: rgba(255,255,255,.8); font-size: 14px; }
-
-    /* para quién */
-    .who-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-    .who-card { text-align: center; padding: 26px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
-    .who-card .ic { width: 54px; height: 54px; border-radius: 50%; background: var(--surface); color: var(--navy); display: grid; place-items: center; margin: 0 auto 14px; }
-    .who-card h3 { font-size: 16px; color: var(--navy); }
-
-    /* CTA / contacto */
-    .contact { background: var(--surface); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-    .contact-copy h2 { font-size: clamp(28px, 3.4vw, 38px); color: var(--navy); font-weight: 800; margin: 14px 0 16px; }
-    .contact-copy p { color: var(--muted); font-size: 17px; margin-bottom: 26px; }
-    .contact-direct { display: grid; gap: 14px; }
-    .cd-item { display: flex; align-items: center; gap: 14px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; transition: border-color .2s, transform .15s; }
-    .cd-item:hover { border-color: var(--accent); transform: translateX(3px); }
-    .cd-item .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; flex: 0 0 auto; color: #fff; }
-    .cd-item.wa .ic { background: #25D366; }
-    .cd-item.mail .ic { background: var(--navy); }
-    .cd-item.call .ic { background: var(--accent); }
-    .cd-item small { display: block; color: var(--muted); font-size: 12px; }
-    .cd-item b { color: var(--navy); font-size: 16px; }
-
-    form.lead-form { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); }
-    form.lead-form h3 { color: var(--navy); font-size: 20px; margin-bottom: 6px; }
-    form.lead-form .fmuted { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
-    .field { margin-bottom: 16px; }
-    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
-    .field input, .field textarea {
-      width: 100%; font-family: var(--font); font-size: 15px; color: var(--ink);
-      border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: #fff; transition: border-color .15s, box-shadow .15s;
+    /* hero collage card */
+    .collage { position: relative; min-height: 420px; }
+    .sticker {
+      position: absolute; background: #fff; border: var(--bd); border-radius: 18px;
+      box-shadow: var(--shadow); padding: 18px; will-change: transform;
     }
-    .field input:focus, .field textarea:focus { outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,107,53,.15); }
-    .field textarea { resize: vertical; min-height: 96px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    form.lead-form .btn { width: 100%; }
-    .form-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; }
+    .stk-dash { top: 0; left: 0; right: 30px; transform: rotate(-3deg); z-index: 3; }
+    .stk-dash .row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1.5px dashed #d9d0bd; font-size: 13px; font-weight: 600; }
+    .stk-dash .row:last-child { border-bottom: 0; }
+    .stk-dash .dot { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink); flex: 0 0 auto; }
+    .stk-dash .tag { margin-left: auto; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; border: 1.5px solid var(--ink); }
+    .stk-chat { bottom: 24px; left: 20px; width: 220px; transform: rotate(2.5deg); z-index: 4; background: var(--cyan); color: #fff; }
+    .stk-chat b { font-family: var(--disp); font-size: 13px; }
+    .stk-chat .bub { background: #fff; color: var(--ink); border: var(--bd); border-radius: 12px; padding: 8px 11px; font-size: 12.5px; font-weight: 500; margin-top: 10px; }
+    .stk-check { bottom: 0; right: 0; transform: rotate(-4deg); z-index: 5; background: var(--green); color: #fff; display: flex; align-items: center; gap: 10px; }
+    .stk-check b { font-family: var(--disp); font-size: 15px; }
 
-    /* footer */
-    footer { background: var(--navy); color: rgba(255,255,255,.7); padding: 56px 0 28px; }
-    .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 36px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,.1); }
-    footer .brand b { color: #fff; }
-    footer p { font-size: 14px; margin-top: 14px; max-width: 320px; }
-    footer h4 { color: #fff; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 14px; }
-    footer ul { list-style: none; display: grid; gap: 10px; }
-    footer ul a { font-size: 14px; color: rgba(255,255,255,.72); }
-    footer ul a:hover { color: var(--accent); }
-    .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 22px; font-size: 13px; }
+    /* ── MARQUEE ── */
+    .marquee { background: var(--ink); color: var(--bg); border-top: var(--bd); border-bottom: var(--bd); padding: 16px 0; overflow: hidden; position: relative; z-index: 2; }
+    .marquee-track { display: flex; gap: 0; white-space: nowrap; width: max-content; animation: scroll 26s linear infinite; }
+    .marquee-track span { font-family: var(--disp); font-weight: 800; font-size: 22px; letter-spacing: -.01em; padding: 0 14px; display: inline-flex; align-items: center; gap: 28px; }
+    .marquee-track .star { color: var(--orange); }
+    @keyframes scroll { to { transform: translateX(-50%); } }
 
-    /* WhatsApp flotante */
-    .wa-float {
-      position: fixed; right: 22px; bottom: 22px; z-index: 60;
-      width: 60px; height: 60px; border-radius: 50%; background: #25D366;
-      display: grid; place-items: center; box-shadow: 0 12px 30px rgba(37,211,102,.45);
-      transition: transform .2s; animation: pulse 2.4s infinite;
+    /* ── SECTION HEADERS ── */
+    .sec-head { margin-bottom: 50px; max-width: 640px; }
+    .sec-kicker { display: inline-block; font-family: var(--disp); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 5px 14px; border-radius: 100px; margin-bottom: 18px; }
+    .sec-head h2 { font-family: var(--disp); font-weight: 800; font-size: clamp(32px, 5vw, 58px); line-height: .98; letter-spacing: -.03em; }
+    .sec-head p { font-size: 18px; color: #463f33; margin-top: 16px; font-weight: 500; }
+
+    /* ── PRODUCTS (bento) ── */
+    .products { padding: 96px 0; }
+    .bento { display: grid; grid-template-columns: 1.1fr .9fr; grid-template-rows: auto auto; gap: 22px; }
+    .pcard {
+      border: var(--bd); border-radius: 24px; padding: 34px; position: relative; overflow: hidden;
+      box-shadow: var(--shadow-lg); transition: transform .15s ease, box-shadow .15s ease;
+      display: flex; flex-direction: column;
     }
-    .wa-float:hover { transform: scale(1.08); }
-    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,.5); } 70% { box-shadow: 0 0 0 16px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+    .pcard:hover { transform: translate(-3px,-3px); box-shadow: 11px 11px 0 var(--ink); }
+    .pcard.big { grid-row: 1 / 3; background: var(--orange); color: #fff; }
+    .pcard.crm  { background: var(--cyan); color: #fff; }
+    .pcard.chk  { background: var(--green); color: #fff; }
+    .pcard .num { font-family: var(--disp); font-weight: 800; font-size: 15px; opacity: .65; }
+    .pcard .picon { width: 58px; height: 58px; border: var(--bd); border-radius: 14px; background: #fff; color: var(--ink); display: grid; place-items: center; margin: 18px 0 22px; box-shadow: var(--shadow-sm); }
+    .pcard.big .picon { width: 66px; height: 66px; }
+    .pcard h3 { font-family: var(--disp); font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-bottom: 14px; }
+    .pcard.big h3 { font-size: clamp(34px, 4vw, 52px); }
+    .pcard:not(.big) h3 { font-size: clamp(28px, 3vw, 36px); }
+    .pcard p { font-size: 15px; font-weight: 500; line-height: 1.6; opacity: .95; margin-bottom: 22px; flex: 1; }
+    .pcard.big p { font-size: 17px; max-width: 420px; }
+    .pcard .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+    .pcard .chip { font-size: 12px; font-weight: 600; background: rgba(255,255,255,.22); border: 1.5px solid rgba(255,255,255,.5); padding: 5px 11px; border-radius: 100px; }
+    .pcard .go { display: inline-flex; align-items: center; gap: 9px; align-self: flex-start; font-family: var(--disp); font-weight: 700; font-size: 15px; background: #fff; color: var(--ink); border: var(--bd); box-shadow: var(--shadow-sm); padding: 11px 20px; border-radius: 100px; transition: transform .12s, box-shadow .12s; }
+    .pcard .go:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+    .pcard .go svg { transition: transform .15s; }
+    .pcard .go:hover svg { transform: translateX(3px); }
+    .pcard .ghost-num { position: absolute; right: -10px; bottom: -34px; font-family: var(--disp); font-weight: 800; font-size: 160px; line-height: 1; opacity: .12; pointer-events: none; }
 
-    /* reveal on scroll */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    /* ── WHY ── */
+    .why { padding: 96px 0; background: var(--ink); color: var(--bg); border-top: var(--bd); border-bottom: var(--bd); position: relative; overflow: hidden; }
+    .why .sec-kicker { background: var(--orange); color: #fff; }
+    .why .sec-head h2 { color: var(--bg); }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .why-card { border: 2.5px solid var(--bg); border-radius: 20px; padding: 26px 22px; transition: background .15s, color .15s, transform .15s; }
+    .why-card:hover { transform: translateY(-5px); }
+    .why-card:nth-child(1):hover { background: var(--orange); border-color: var(--orange); }
+    .why-card:nth-child(2):hover { background: var(--cyan); border-color: var(--cyan); }
+    .why-card:nth-child(3):hover { background: var(--green); border-color: var(--green); }
+    .why-card:nth-child(4):hover { background: var(--yellow); border-color: var(--yellow); color: var(--ink); }
+    .why-ic { width: 50px; height: 50px; display: grid; place-items: center; margin-bottom: 18px; }
+    .why-card h3 { font-family: var(--disp); font-weight: 700; font-size: 19px; margin-bottom: 9px; }
+    .why-card p { font-size: 14px; opacity: .82; line-height: 1.6; }
+
+    /* ── CTA ── */
+    .cta { padding: 100px 0; }
+    .cta-box { background: var(--orange); border: var(--bd); border-radius: 30px; box-shadow: var(--shadow-lg); padding: 70px 44px; text-align: center; position: relative; overflow: hidden; color: #fff; }
+    .cta-box h2 { font-family: var(--disp); font-weight: 800; font-size: clamp(32px, 5.5vw, 64px); line-height: .96; letter-spacing: -.03em; margin-bottom: 18px; position: relative; z-index: 2; }
+    .cta-box p { font-size: 19px; font-weight: 500; max-width: 520px; margin: 0 auto 36px; position: relative; z-index: 2; }
+    .cta-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; position: relative; z-index: 2; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--bg2); border-top: var(--bd); padding: 56px 0 28px; }
+    .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 36px; border-bottom: var(--bd); }
+    .foot-brand .brand-txt { font-size: 24px; }
+    .foot-brand p { font-size: 14px; color: #5a5142; margin-top: 14px; max-width: 280px; font-weight: 500; }
+    footer h4 { font-family: var(--disp); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 16px; }
+    footer ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    footer ul a { font-size: 14.5px; font-weight: 500; color: #463f33; transition: color .12s; display: inline-flex; align-items: center; gap: 8px; }
+    footer ul a:hover { color: var(--orange); }
+    .fdot { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink); flex: 0 0 auto; }
+    .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 24px; font-size: 13px; font-weight: 500; color: #5a5142; }
+
+    /* ── WhatsApp float ── */
+    .wa-float { position: fixed; right: 22px; bottom: 22px; z-index: 60; width: 62px; height: 62px; border-radius: 50%; background: #25D366; border: var(--bd); box-shadow: var(--shadow); display: grid; place-items: center; transition: transform .15s; }
+    .wa-float:hover { transform: translate(-2px,-2px) rotate(-6deg); box-shadow: 7px 7px 0 var(--ink); }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s cubic-bezier(.2,.7,.3,1), transform .6s cubic-bezier(.2,.7,.3,1); }
     .reveal.in { opacity: 1; transform: none; }
 
-    /* ---------- Responsive ---------- */
-    @media (max-width: 960px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 56px; padding: 64px 0 80px; }
-      .device { order: -1; }
-      .ben-grid, .contact-grid { grid-template-columns: 1fr; gap: 36px; }
-      .steps, .who-grid { grid-template-columns: 1fr 1fr; }
-      .pain-grid, .mod-grid { grid-template-columns: 1fr 1fr; }
+    /* ── Responsive ── */
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+      .collage { min-height: 360px; max-width: 440px; }
+      .bento { grid-template-columns: 1fr; }
+      .pcard.big { grid-row: auto; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
       .foot-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
       .nav-links { display: none; }
-      .nav-links.open {
-        display: flex; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0;
-        background: var(--navy); padding: 18px 24px; gap: 16px; border-bottom: 1px solid rgba(255,255,255,.1);
-      }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: var(--bg); border-bottom: var(--bd); padding: 20px 28px; gap: 18px; }
       .nav-toggle { display: block; }
-      .nav-cta .btn-ghost { display: none; }
-      section { padding: 64px 0; }
-      .pain-grid, .mod-grid, .steps, .who-grid, .form-row, .foot-grid { grid-template-columns: 1fr; }
-      .float-badge { display: none; }
+      .nav-cta .btn:not(.btn-orange) { display: none; }
+      .why-grid, .foot-grid { grid-template-columns: 1fr; }
+      .hero { padding: 56px 0 50px; }
+      .products, .why, .cta { padding: 70px 0; }
+      .cta-box { padding: 50px 26px; }
+      .marquee-track span { font-size: 18px; }
     }
   </style>
 </head>
 <body>
+  <div class="grain" aria-hidden="true"></div>
 
-  <!-- ====================== HEADER ====================== -->
-  <header class="nav">
+  <!-- ══════════ HEADER ══════════ -->
+  <header>
     <div class="wrap nav-inner">
-      <a href="#top" class="brand" aria-label="KAVY LOGISTICS inicio">
-        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
-          <rect width="32" height="32" rx="7" fill="#FF6B35"/>
-          <path d="M16 6l8 4.5v9L16 24l-8-4.5v-9z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M8 10.5l8 4.5 8-4.5M16 15v9" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+      <a href="#top" class="brand">
+        <svg class="brand-icon" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="9" fill="#FF5C28"/>
+          <path d="M13 9v22M13 20l14-11M13 20l14 11" stroke="#15110C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span style="line-height:1.05">
-          <b>KAVY</b>
-          <span>LOGISTICS</span>
-        </span>
+        <div class="brand-txt">KAVY<small>Corp</small></div>
       </a>
-
       <nav class="nav-links" id="navLinks">
-        <a href="#servicio">El servicio</a>
-        <a href="#modulos">Módulos</a>
-        <a href="#como">Cómo funciona</a>
-        <a href="#beneficios">Beneficios</a>
+        <a href="#productos">Productos</a>
+        <a href="#porque">Por qué KAVY</a>
         <a href="#contacto">Contacto</a>
       </nav>
-
       <div class="nav-cta">
-        <a href="#contacto" class="btn btn-ghost">Solicitar demo</a>
-        <a href="https://wa.me/573005768886?text=Hola%20KAVY%20LOGISTICS%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20software%20de%20bodega" class="btn btn-primary" target="_blank" rel="noopener">WhatsApp</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-        </button>
+        <a href="#contacto" class="btn">Solicitar demo</a>
+        <a href="https://wa.me/573005768886?text=Hola%20KAVY%20CORP%2C%20quiero%20información%20sobre%20sus%20productos" class="btn btn-orange" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menú"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
       </div>
     </div>
   </header>
-
   <span id="top"></span>
 
-  <!-- ====================== HERO ====================== -->
-  <section class="hero" style="padding:0">
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <!-- formas orgánicas -->
+    <div class="shape" style="top:60px;right:4%;animation:spin 26s linear infinite" aria-hidden="true">
+      <svg width="120" height="120" viewBox="0 0 120 120"><path d="M60 4c14 0 22 14 34 20s28 4 30 18-14 22-14 38 12 26-2 36-30-6-48-6-34 16-46 4 2-30 2-44S6 78 6 60 18 30 30 22 46 4 60 4z" fill="#6C4DF2" stroke="#15110C" stroke-width="2.5"/></svg>
+    </div>
+    <div class="shape" style="bottom:30px;left:-30px;animation:bobble 7s ease-in-out infinite" aria-hidden="true">
+      <svg width="78" height="78" viewBox="0 0 78 78"><path d="M39 3l9 24 25 1-20 16 7 25-21-15-21 15 7-25-20-16 25-1z" fill="#FFC83D" stroke="#15110C" stroke-width="2.5" stroke-linejoin="round"/></svg>
+    </div>
+
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <span class="eyebrow">Software WMS para bodegas</span>
-          <h1>Control total de tu bodega, <span class="hl">en tiempo real</span></h1>
-          <p class="lead">
-            KAVY LOGISTICS digitaliza tu operación de punta a punta: recepción con evidencia
-            fotográfica, ubicación por código de barras, despachos trazables y auditoría de
-            inventario. Menos errores, cero papel, visibilidad total.
-          </p>
+          <span class="hero-tag">✦ Software empresarial · Colombia</span>
+          <h1>
+            Software que<br>
+            <span class="mueve">mueve</span> tu<br>
+            <span class="outline">negocio.</span>
+          </h1>
+          <p class="hero-lead">Tres herramientas para logística de bodega, ventas con IA y verificación de pagos. Hechas en Colombia, para empresas colombianas.</p>
           <div class="hero-actions">
-            <a href="#contacto" class="btn btn-primary">Solicitar una demo</a>
-            <a href="https://wa.me/573005768886?text=Hola%20KAVY%20LOGISTICS%2C%20quiero%20una%20demo%20del%20software%20de%20bodega" class="btn btn-ghost" target="_blank" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zM6.597 20.13c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.489-.917zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-              Escríbenos
+            <a href="#productos" class="btn btn-orange">Ver los 3 productos</a>
+            <a href="https://wa.me/573005768886?text=Hola%20KAVY%20CORP%2C%20quiero%20información" class="btn" target="_blank" rel="noopener">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>
+              Hablar con nosotros
             </a>
-          </div>
-          <div class="hero-trust">
-            <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Recepción con fotos</div>
-            <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Multi-bodega</div>
-            <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Auditoría de inventario</div>
-            <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Lectores industriales</div>
           </div>
         </div>
 
-        <!-- mockup -->
-        <div class="device" aria-hidden="true">
-          <div class="scr-head">
-            <span>KAVY · Tablero<br><small>Bodega Central</small></span>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        <!-- collage de stickers -->
+        <div class="collage" aria-hidden="true">
+          <div class="sticker stk-dash" data-speed="0.06" data-rot="-3">
+            <div class="row"><span class="dot" style="background:var(--green)"></span> EST-20260625-014 <span class="tag" style="color:var(--green)">EN BODEGA</span></div>
+            <div class="row"><span class="dot" style="background:var(--orange)"></span> EST-20260625-009 <span class="tag" style="color:var(--orange)">DESPACHO</span></div>
+            <div class="row"><span class="dot" style="background:var(--green)"></span> EST-20260625-007 <span class="tag" style="color:var(--green)">UBICADA</span></div>
           </div>
-          <div class="kpi-row">
-            <div class="kpi"><b>87%</b><span>Ocupación</span></div>
-            <div class="kpi"><b>1.240</b><span>Estibas activas</span></div>
+          <div class="sticker stk-chat" data-speed="-0.05" data-rot="2.5">
+            <b>🤖 KAVY Assistant</b>
+            <div class="bub">¡Hola! ¿Cotizamos las 50 unidades hoy?</div>
           </div>
-          <div class="row-item"><span class="dot"></span> EST-20260625-014 <span class="tag">EN BODEGA</span></div>
-          <div class="row-item"><span class="dot"></span> EST-20260625-013 <span class="tag">UBICADA</span></div>
-          <div class="row-item"><span class="dot warn"></span> EST-20260625-009 <span class="tag">DESPACHO</span></div>
-          <div class="row-item"><span class="dot"></span> EST-20260625-007 <span class="tag">EN BODEGA</span></div>
-          <div class="row-item"><span class="dot warn"></span> NVD-2026-031 <span class="tag">NOVEDAD</span></div>
-
-          <div class="float-badge fb-1">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
-            Recepción confirmada
-          </div>
-          <div class="float-badge fb-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M11 4v16M15 4v16M19 4v16"/></svg>
-            Código escaneado
+          <div class="sticker stk-check" data-speed="0.09" data-rot="-4">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            <div><b>Pago verificado</b><div style="font-size:11px;opacity:.9;font-weight:600">Bancolombia · real ✓</div></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- cinta de confianza -->
-  <div class="strip">
-    <div class="wrap">
-      <span><b>Trazabilidad</b> de cada estiba</span>
-      <span><b>RBAC</b> por roles</span>
-      <span><b>Códigos de barras</b> Code128</span>
-      <span><b>Reportes</b> y exportación CSV</span>
-      <span><b>Operación</b> sin papel</span>
+  <!-- ══════════ MARQUEE ══════════ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>LOGÍSTICA <i class="star">✦</i> VENTAS CON IA <i class="star">✦</i> VERIFICACIÓN DE PAGOS <i class="star">✦</i> HECHO EN COLOMBIA <i class="star">✦</i></span>
+      <span>LOGÍSTICA <i class="star">✦</i> VENTAS CON IA <i class="star">✦</i> VERIFICACIÓN DE PAGOS <i class="star">✦</i> HECHO EN COLOMBIA <i class="star">✦</i></span>
     </div>
   </div>
 
-  <!-- ====================== PROBLEMA ====================== -->
-  <section class="pain" id="servicio">
+  <!-- ══════════ PRODUCTS ══════════ -->
+  <section class="products" id="productos">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">El servicio</span>
-        <h2>¿Tu bodega todavía depende de Excel y memoria?</h2>
-        <p>Las operaciones manuales pierden mercancía, tiempo y confianza del cliente. KAVY LOGISTICS reemplaza el papel por un sistema que sabe dónde está cada cosa.</p>
+      <div class="sec-head reveal">
+        <span class="sec-kicker">Nuestros productos</span>
+        <h2>Tres herramientas.<br>Una sola empresa.</h2>
+        <p>Cada una resuelve un dolor real de tu operación. Juntas, son tu ventaja competitiva.</p>
       </div>
-      <div class="pain-grid">
-        <div class="pain-card reveal">
-          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-          <h3>Inventario que no cuadra</h3>
-          <p>Faltantes y sobrantes que aparecen solo cuando ya es tarde. Sin saber quién, cuándo ni dónde.</p>
-        </div>
-        <div class="pain-card reveal">
-          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></div>
-          <h3>Recepciones sin evidencia</h3>
-          <p>Reclamos por mercancía dañada sin fotos ni respaldo. La responsabilidad queda en el aire.</p>
-        </div>
-        <div class="pain-card reveal">
-          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg></div>
-          <h3>Cero visibilidad gerencial</h3>
-          <p>No sabes la ocupación real, ni qué se movió hoy, ni dónde están los cuellos de botella.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ====================== MÓDULOS ====================== -->
-  <section id="modulos">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Todo en un solo sistema</span>
-        <h2>Los módulos que mueven tu bodega</h2>
-        <p>Del muelle al despacho, cada paso queda registrado, ubicado y auditado.</p>
-      </div>
-      <div class="mod-grid">
-        <div class="mod-card reveal">
-          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 16v2a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h2"/><rect x="8" y="2" width="12" height="12" rx="2"/><circle cx="14" cy="8" r="2"/></svg></div>
-          <h3>Recepción con fotos</h3>
-          <p>Registra cliente, vehículo y placa, captura fotos del camión y de cada estiba. Evidencia desde el primer minuto.</p>
-        </div>
-        <div class="mod-card reveal">
-          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M11 4v16M15 4v16M19 4v16"/></svg></div>
-          <h3>Ubicación por código</h3>
-          <p>Genera IDs únicos de estiba y etiquetas Code128. Escanea y asigna posición en segundos con lectores industriales.</p>
-        </div>
-        <div class="mod-card reveal">
-          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-          <h3>Despachos trazables</h3>
-          <p>Salida a prealistamiento y salida final al cliente. Sugerencias de ubicación y fraccionamiento de estibas con reingreso.</p>
-        </div>
-        <div class="mod-card reveal">
-          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-          <h3>Auditoría de inventario</h3>
-          <p>Inventarios cíclicos o generales, conteo por ubicación y comparación automática sistema vs. físico, con cierre y reporte.</p>
-        </div>
-        <div class="mod-card reveal">
-          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4.5v9L12 22l-9-6.5v-9z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div>
-          <h3>Multi-bodega</h3>
-          <p>Configura columnas, grilla o bloques de piso. Capacidades y posiciones por bodega, con ocupación calculada en vivo.</p>
-        </div>
-        <div class="mod-card reveal">
-          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></div>
-          <h3>Tablero gerencial</h3>
-          <p>Ocupación global, espacios libres, alertas críticas y movimiento del día. Decide con datos, no con corazonadas.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== CÓMO FUNCIONA ====================== -->
-  <section class="how" id="como">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow" style="color:#fff">Flujo simple</span>
-        <h2>Cómo funciona</h2>
-        <p>Cuatro pasos que cubren el ciclo completo de la mercancía dentro de tu bodega.</p>
-      </div>
-      <div class="steps">
-        <div class="step reveal"><div class="n"></div><h3>Recibe</h3><p>Registra la llegada con cliente, vehículo y fotos. Cada estiba queda identificada.</p></div>
-        <div class="step reveal"><div class="n"></div><h3>Ubica</h3><p>Escanea el código y asigna posición. El sistema sabe exactamente dónde quedó.</p></div>
-        <div class="step reveal"><div class="n"></div><h3>Despacha</h3><p>Prealistamiento o salida final con trazabilidad y fraccionamiento de pedidos.</p></div>
-        <div class="step reveal"><div class="n"></div><h3>Audita</h3><p>Conteos por ubicación y comparación automática. Las novedades se gestionan y cierran.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== BENEFICIOS ====================== -->
-  <section id="beneficios">
-    <div class="wrap">
-      <div class="ben-grid">
-        <div class="reveal">
-          <span class="eyebrow">Por qué KAVY LOGISTICS</span>
-          <h2 style="font-size:clamp(28px,3.4vw,38px);color:var(--navy);margin:14px 0 28px">Resultados que tu operación siente</h2>
-          <div class="ben-list">
-            <div class="ben">
-              <div class="ck"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
-              <div><h3>Exactitud de inventario</h3><p>Comparación automática sistema vs. físico que elimina los descuadres invisibles.</p></div>
-            </div>
-            <div class="ben">
-              <div class="ck"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
-              <div><h3>Trazabilidad total</h3><p>Cada movimiento registra usuario y hora. Auditable de principio a fin.</p></div>
-            </div>
-            <div class="ben">
-              <div class="ck"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
-              <div><h3>Menos costos operativos</h3><p>Menos reprocesos, menos mercancía perdida y menos tiempo buscando estibas.</p></div>
-            </div>
-            <div class="ben">
-              <div class="ck"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg></div>
-              <div><h3>Respaldo ante reclamos</h3><p>Evidencia fotográfica de recepción que protege a tu operador frente al cliente.</p></div>
-            </div>
+      <div class="bento">
+        <!-- LOGISTICS (grande) -->
+        <div class="pcard big reveal">
+          <span class="num">01 / Logística</span>
+          <div class="picon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4.5v9L12 22l-9-4.5v-9z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>
           </div>
+          <h3>KAVY<br>Logistics</h3>
+          <p>El WMS que controla tu bodega de punta a punta: recepción con fotos, ubicación por código de barras, despachos trazables y auditoría de inventario en tiempo real. Menos errores, cero papel.</p>
+          <div class="chips">
+            <span class="chip">Recepción con fotos</span>
+            <span class="chip">Code128</span>
+            <span class="chip">Auditoría</span>
+            <span class="chip">Multi-bodega</span>
+          </div>
+          <a href="logistics/" class="go">Ver KAVY Logistics <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <span class="ghost-num">01</span>
         </div>
-        <div class="stat-card reveal">
-          <div class="big">100%</div>
-          <p style="color:rgba(255,255,255,.82);margin:8px 0 24px">de tus estibas localizadas y trazables en todo momento.</p>
-          <div class="row"><b>−Errores</b><span>Conteos digitales que reemplazan el papel y la memoria.</span></div>
-          <div class="row"><b>Tiempo real</b><span>Ocupación y movimientos del día siempre actualizados.</span></div>
-          <div class="row"><b>Roles</b><span>Gerencia, admin de bodega, auxiliar y analista, cada uno con su acceso.</span></div>
+
+        <!-- CRM -->
+        <div class="pcard crm reveal">
+          <span class="num">02 / Ventas IA</span>
+          <div class="picon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3>KAVY CRM</h3>
+          <p>Un asistente de IA que atiende, califica y hace seguimiento a tus prospectos. 24/7, sin contratar más gente.</p>
+          <a href="crm/" class="go">Ver KAVY CRM <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <span class="ghost-num">02</span>
+        </div>
+
+        <!-- CHECK -->
+        <div class="pcard chk reveal">
+          <span class="num">03 / Pagos</span>
+          <div class="picon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3>KAVY Check</h3>
+          <p>Verifica comprobantes de Bancolombia al instante. Detecta pagos falsos antes de entregar el producto.</p>
+          <a href="check/" class="go">Ver KAVY Check <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <span class="ghost-num">03</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====================== PARA QUIÉN ====================== -->
-  <section class="pain">
+  <!-- ══════════ WHY ══════════ -->
+  <section class="why" id="porque">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Para quién</span>
-        <h2>Pensado para tu tipo de operación</h2>
+      <div class="sec-head reveal">
+        <span class="sec-kicker">Nuestra diferencia</span>
+        <h2>Por qué nos eligen</h2>
+        <p style="color:#cfc7b6">No vendemos licencias genéricas. Construimos herramientas para problemas que conocemos de cerca.</p>
       </div>
-      <div class="who-grid">
-        <div class="who-card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4.5v9L12 22l-9-6.5v-9z"/><path d="M3 7l9 5 9-5"/></svg></div><h3>Operadores logísticos / 3PL</h3></div>
-        <div class="who-card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M3 8l3-5h12l3 5M12 8v13"/></svg></div><h3>Centros de distribución</h3></div>
-        <div class="who-card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6l2 14h11"/><path d="M6 7h15l-2 7H8"/></svg></div><h3>Importadores y mayoristas</h3></div>
-        <div class="who-card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div><h3>Bodegas industriales</h3></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== CONTACTO ====================== -->
-  <section class="contact" id="contacto">
-    <div class="wrap">
-      <div class="contact-grid">
-        <div class="contact-copy reveal">
-          <span class="eyebrow">Hablemos</span>
-          <h2>Agenda una demo de KAVY LOGISTICS</h2>
-          <p>Cuéntanos sobre tu bodega y te mostramos cómo se vería tu operación funcionando sobre KAVY LOGISTICS. Sin compromiso.</p>
-          <div class="contact-direct">
-            <a class="cd-item wa" href="https://wa.me/573005768886?text=Hola%20KAVY%20LOGISTICS%2C%20quiero%20agendar%20una%20demo" target="_blank" rel="noopener">
-              <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zM6.597 20.13c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.489-.917z"/></svg></span>
-              <div><small>WhatsApp directo</small><b>+57 300 576 8886</b></div>
-            </a>
-            <a class="cd-item mail" href="mailto:gerencia@kavycorp.com?subject=Quiero%20una%20demo%20de%20KAVY%20LOGISTICS">
-              <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg></span>
-              <div><small>Correo</small><b>gerencia@kavycorp.com</b></div>
-            </a>
-            <a class="cd-item call" href="tel:+573005768886">
-              <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg></span>
-              <div><small>Llámanos</small><b>+57 300 576 8886</b></div>
-            </a>
-          </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="why-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg></div>
+          <h3>Hecho en Colombia</h3>
+          <p>Entendemos Bancolombia, la DIAN, las bodegas y los clientes de acá. No traducimos software gringo.</p>
         </div>
-
-        <!-- Formulario: por defecto abre WhatsApp con los datos (funciona sin backend).
-             Para recibir por correo, ver nota en el bloque <script> al final. -->
-        <form class="lead-form reveal" id="leadForm">
-          <h3>Solicita información</h3>
-          <p class="fmuted">Te respondemos el mismo día hábil.</p>
-          <div class="form-row">
-            <div class="field">
-              <label for="nombre">Nombre</label>
-              <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required />
-            </div>
-            <div class="field">
-              <label for="empresa">Empresa</label>
-              <input id="empresa" name="empresa" type="text" placeholder="Nombre de la empresa" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="field">
-              <label for="correo">Correo</label>
-              <input id="correo" name="correo" type="email" placeholder="tucorreo@empresa.com" required />
-            </div>
-            <div class="field">
-              <label for="telefono">Teléfono</label>
-              <input id="telefono" name="telefono" type="tel" placeholder="+57 ..." />
-            </div>
-          </div>
-          <div class="field">
-            <label for="mensaje">¿Cómo es tu bodega?</label>
-            <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos cuántas bodegas manejas, volumen aproximado, etc."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Enviar solicitud</button>
-          <p class="form-note">Al enviar aceptas que te contactemos por los datos suministrados.</p>
-        </form>
+        <div class="why-card reveal">
+          <div class="why-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div>
+          <h3>Soporte humano</h3>
+          <p>Siempre hay alguien al otro lado. Sin tickets en inglés ni bots. Resolvemos por WhatsApp.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M1 12h4M19 12h4M4.2 19.8l2.8-2.8M17 7l2.8-2.8"/></svg></div>
+          <h3>Tecnología de hoy</h3>
+          <p>IA real, cloud nativo, mobile-first. No software de los 2000 con interfaz nueva.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Sin contratos trampa</h3>
+          <p>Pagas por lo que usas. Sin permanencia ni letra pequeña. Si no te sirve, te vas tranquilo.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ====================== FOOTER ====================== -->
+  <!-- ══════════ CTA ══════════ -->
+  <section class="cta" id="contacto">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <div class="shape" style="top:-30px;left:30px;animation:spinRev 22s linear infinite;opacity:.5" aria-hidden="true">
+          <svg width="90" height="90" viewBox="0 0 90 90"><path d="M45 4l11 28 30 1-24 19 8 30-25-18-25 18 8-30L4 33l30-1z" fill="#FFC83D" stroke="#15110C" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h2>¿Listo para que tu<br>empresa se mueva?</h2>
+        <p>Cuéntanos tu negocio y te decimos cuál producto necesitas primero. Sin compromiso, sin PowerPoint de 40 slides.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/573005768886?text=Hola%20KAVY%20CORP%2C%20quiero%20conocer%20sus%20productos" class="btn btn-ink" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>
+            Escribir por WhatsApp
+          </a>
+          <a href="mailto:gerencia@kavycorp.com?subject=Quiero%20conocer%20KAVY%20CORP" class="btn">Enviar correo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
   <footer>
     <div class="wrap">
       <div class="foot-grid">
-        <div>
-          <div class="brand" style="color:#fff">
-            <svg class="mark" width="36" height="36" viewBox="0 0 32 32" aria-hidden="true">
-              <rect width="32" height="32" rx="7" fill="#FF6B35"/>
-              <path d="M16 6l8 4.5v9L16 24l-8-4.5v-9z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-              <path d="M8 10.5l8 4.5 8-4.5M16 15v9" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
-            <span style="line-height:1.05"><b style="font-size:18px">KAVY</b><span style="font-weight:600;font-size:11px;letter-spacing:.22em;color:var(--accent);display:block;margin-top:-2px">LOGISTICS</span></span>
-          </div>
-          <p>Software WMS para gestión de bodega e inventario en tiempo real. Una solución de KAVY CORP.</p>
+        <div class="foot-brand">
+          <div class="brand-txt">KAVY<small>Corp</small></div>
+          <p>Software para empresas colombianas. Logística, ventas con IA y verificación de pagos.</p>
         </div>
         <div>
-          <h4>Producto</h4>
+          <h4>Productos</h4>
           <ul>
-            <li><a href="#servicio">El servicio</a></li>
-            <li><a href="#modulos">Módulos</a></li>
-            <li><a href="#como">Cómo funciona</a></li>
-            <li><a href="#beneficios">Beneficios</a></li>
+            <li><a href="logistics/"><span class="fdot" style="background:var(--orange)"></span>KAVY Logistics</a></li>
+            <li><a href="crm/"><span class="fdot" style="background:var(--cyan)"></span>KAVY CRM</a></li>
+            <li><a href="check/"><span class="fdot" style="background:var(--green)"></span>KAVY Check</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#porque">Por qué KAVY</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="https://kavycorp.com">kavycorp.com</a></li>
           </ul>
         </div>
         <div>
@@ -627,82 +464,47 @@
           <ul>
             <li><a href="https://wa.me/573005768886" target="_blank" rel="noopener">WhatsApp +57 300 576 8886</a></li>
             <li><a href="mailto:gerencia@kavycorp.com">gerencia@kavycorp.com</a></li>
-            <li><a href="https://kavycorp.com">kavycorp.com</a></li>
           </ul>
         </div>
       </div>
       <div class="foot-bottom">
         <span>© <span id="year"></span> KAVY CORP — Todos los derechos reservados.</span>
-        <span>Hecho en Colombia 🇨🇴</span>
+        <span>Hecho con orgullo en Colombia 🇨🇴</span>
       </div>
     </div>
   </footer>
 
-  <!-- WhatsApp flotante -->
-  <a class="wa-float" href="https://wa.me/573005768886?text=Hola%20KAVY%20LOGISTICS%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zM6.597 20.13c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.489-.917zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+  <a class="wa-float" href="https://wa.me/573005768886?text=Hola%20KAVY%20CORP%2C%20quiero%20información" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zM6.597 20.13c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.489-.917z"/></svg>
   </a>
 
   <script>
-    // Año dinámico
     document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('navToggle'), links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
 
-    // Menú móvil
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-
-    // Reveal on scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
+    // reveal
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // ----------------------------------------------------------------
-    // FORMULARIO
-    // Por defecto: arma un mensaje y abre WhatsApp con los datos.
-    // → Funciona HOY sin ningún servidor.
-    //
-    // ¿Prefieres recibir los leads por CORREO?  Crea un form gratis en
-    // https://formspree.io (2 min), copia tu endpoint y:
-    //   1. cambia USAR_FORMSPREE = true
-    //   2. pega tu endpoint en FORMSPREE_ENDPOINT
-    // ----------------------------------------------------------------
-    const USAR_FORMSPREE = false;
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/TU_ID_AQUI';
-    const WA_NUMERO = '573005768886';
-
-    const form = document.getElementById('leadForm');
-    form.addEventListener('submit', async (ev) => {
-      ev.preventDefault();
-      const d = Object.fromEntries(new FormData(form).entries());
-
-      if (USAR_FORMSPREE) {
-        try {
-          const r = await fetch(FORMSPREE_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Accept': 'application/json' },
-            body: new FormData(form)
+    // parallax on scroll — compose translate with each sticker's base rotation
+    const movers = document.querySelectorAll('[data-speed]');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let ticking = false;
+    if (!reduce) window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          movers.forEach(m => {
+            const rot = m.dataset.rot || 0;
+            m.style.transform = `translateY(${y * parseFloat(m.dataset.speed)}px) rotate(${rot}deg)`;
           });
-          if (r.ok) { alert('¡Gracias! Te contactaremos muy pronto.'); form.reset(); }
-          else { throw new Error('falló'); }
-        } catch (_) {
-          alert('No pudimos enviar el formulario. Escríbenos por WhatsApp y te atendemos de una.');
-        }
-        return;
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      // Default: WhatsApp con los datos del formulario
-      const msg =
-        `Hola KAVY LOGISTICS, quiero información sobre el software de bodega.%0A%0A` +
-        `*Nombre:* ${encodeURIComponent(d.nombre || '')}%0A` +
-        `*Empresa:* ${encodeURIComponent(d.empresa || '')}%0A` +
-        `*Correo:* ${encodeURIComponent(d.correo || '')}%0A` +
-        `*Teléfono:* ${encodeURIComponent(d.telefono || '')}%0A` +
-        `*Mensaje:* ${encodeURIComponent(d.mensaje || '')}`;
-      window.open(`https://wa.me/${WA_NUMERO}?text=${msg}`, '_blank');
-    });
+    }, { passive: true });
   </script>
 </body>
 </html>

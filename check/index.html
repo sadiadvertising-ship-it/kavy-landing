@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAVY Check — Verificador de comprobantes Bancolombia</title>
+  <meta name="description" content="KAVY Check verifica comprobantes de Bancolombia en segundos. Detecta pagos falsos antes de entregar el producto o servicio. Protege tu caja con validación inteligente." />
+  <meta name="theme-color" content="#F5F0E6" />
+  <link rel="canonical" href="https://kavycorp.com/check/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="KAVY Check — Detecta comprobantes Bancolombia falsos" />
+  <meta property="og:description" content="Valida comprobantes de Bancolombia al instante. Protege tu negocio del fraude con IA." />
+  <meta property="og:url" content="https://kavycorp.com/check/" />
+  <meta property="og:locale" content="es_CO" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231FA84B'/%3E%3Cpath d='M16 4l3.7 7.5L28 12.6l-6 5.9 1.4 8.3L16 22.9l-7.4 3.9L10 18.5l-6-5.9 8.3-1.1z' fill='none' stroke='%23000' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #F5F0E6; --bg2: #EFE8D8; --ink: #15110C;
+      --c: #1FA84B; --c-deep: #16823A;
+      --orange: #FF5C28; --cyan: #1AAEC2; --red: #E5484D; --yellow: #FFC83D;
+      --shadow: 5px 5px 0 var(--ink); --shadow-lg: 8px 8px 0 var(--ink); --shadow-sm: 3px 3px 0 var(--ink);
+      --bd: 2.5px solid var(--ink);
+      --disp: 'Syne', sans-serif; --body: 'Space Grotesk', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--bg); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    ::selection { background: var(--c); color: #fff; }
+    h1,h2,h3 { font-family: var(--disp); letter-spacing: -.025em; }
+
+    .grain { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .42; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 140px; }
+    .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+    section { position: relative; z-index: 2; }
+    .shape { position: absolute; z-index: 1; pointer-events: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+
+    .btn { display: inline-flex; align-items: center; gap: 9px; font-family: var(--disp); font-weight: 700; font-size: 15px; padding: 14px 26px; border: var(--bd); border-radius: 100px; cursor: pointer; transition: transform .12s, box-shadow .12s; background: #fff; color: var(--ink); box-shadow: var(--shadow); }
+    .btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--ink); }
+    .btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn-c { background: var(--c); color: #fff; }
+    .btn-ink { background: var(--ink); color: var(--bg); }
+
+    header { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: var(--bd); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 16px; }
+    .nav-left { display: flex; align-items: center; gap: 16px; }
+    .back-chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--disp); font-weight: 700; font-size: 12px; background: var(--bg2); border: var(--bd); box-shadow: var(--shadow-sm); padding: 7px 13px; border-radius: 100px; transition: transform .12s, box-shadow .12s; }
+    .back-chip:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-icon { width: 38px; height: 38px; border: var(--bd); border-radius: 9px; box-shadow: var(--shadow-sm); flex: 0 0 auto; }
+    .brand-txt { font-family: var(--disp); font-weight: 800; font-size: 19px; line-height: 1; }
+    .brand-txt small { display: block; font-family: var(--body); font-weight: 600; font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-deep); margin-top: 3px; }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { font-family: var(--disp); font-weight: 600; font-size: 15px; transition: color .12s; }
+    .nav-links a:hover { color: var(--c-deep); }
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .nav-toggle { display: none; background: none; border: 0; color: var(--ink); cursor: pointer; }
+
+    .hero { padding: 80px 0 64px; position: relative; overflow: hidden; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--disp); font-weight: 700; font-size: 13px; background: var(--yellow); border: var(--bd); box-shadow: var(--shadow-sm); padding: 7px 16px; border-radius: 100px; margin-bottom: 28px; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 46px; align-items: center; }
+    .hero h1 { font-weight: 800; font-size: clamp(42px, 6.2vw, 80px); line-height: .94; margin-bottom: 24px; }
+    .hero h1 .hl { color: var(--c); position: relative; display: inline-block; }
+    .hero h1 .hl::after { content:''; position:absolute; left:-3px; right:-3px; bottom:5px; height:12px; background:var(--yellow); z-index:-1; transform: rotate(-1.2deg); }
+    .hero-lead { font-size: clamp(16px, 2vw, 20px); max-width: 540px; margin-bottom: 34px; color: #463f33; font-weight: 500; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+    /* comprobantes mockup */
+    .comps { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .comp { background: #fff; border: var(--bd); border-radius: 18px; padding: 18px; box-shadow: var(--shadow); }
+    .comp.ok  { transform: rotate(-1.5deg); }
+    .comp.bad { transform: rotate(2deg); border-color: var(--red); }
+    .comp-h { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+    .comp-logo { width: 34px; height: 34px; border: 2px solid var(--ink); border-radius: 8px; background: #FEDA00; display: grid; place-items: center; font-family: var(--disp); font-weight: 800; font-size: 15px; }
+    .comp-h b { font-family: var(--disp); font-size: 13px; }
+    .comp-h small { font-size: 10px; color: #6a6052; display: block; font-weight: 600; }
+    .comp-amt { font-family: var(--disp); font-weight: 800; font-size: 26px; margin-bottom: 10px; }
+    .comp.ok .comp-amt { color: var(--c-deep); }
+    .comp.bad .comp-amt { color: var(--red); }
+    .comp-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1.5px dashed #d9d0bd; font-size: 12px; }
+    .comp-row:last-of-type { border-bottom: 0; }
+    .comp-row span { color: #6a6052; font-weight: 500; }
+    .comp-row b { font-weight: 600; }
+    .verdict { display: inline-flex; align-items: center; gap: 6px; font-family: var(--disp); font-weight: 800; font-size: 12px; padding: 6px 12px; border: 2px solid var(--ink); border-radius: 100px; margin-top: 12px; }
+    .verdict.good { background: var(--c); color: #fff; }
+    .verdict.evil { background: var(--red); color: #fff; }
+
+    .marquee { background: var(--ink); color: var(--bg); border-top: var(--bd); border-bottom: var(--bd); padding: 15px 0; overflow: hidden; }
+    .marquee-track { display: flex; white-space: nowrap; width: max-content; animation: scroll 24s linear infinite; }
+    .marquee-track span { font-family: var(--disp); font-weight: 800; font-size: 21px; padding: 0 14px; display: inline-flex; align-items: center; gap: 26px; }
+    .marquee-track .star { color: var(--c); }
+
+    section.block { padding: 90px 0; }
+    .sec-head { max-width: 660px; margin: 0 auto 52px; text-align: center; }
+    .sec-kicker { display: inline-block; font-family: var(--disp); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 5px 14px; border-radius: 100px; margin-bottom: 16px; }
+    .sec-head h2 { font-weight: 800; font-size: clamp(30px, 4.5vw, 50px); line-height: 1; }
+    .sec-head p { font-size: 18px; color: #463f33; margin-top: 14px; font-weight: 500; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .card { background: #fff; border: var(--bd); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); transition: transform .15s, box-shadow .15s; }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-lg); }
+    .card .ic { width: 52px; height: 52px; border: var(--bd); border-radius: 13px; display: grid; place-items: center; margin-bottom: 18px; box-shadow: var(--shadow-sm); color: #fff; }
+    .grid-3 .card:nth-child(3n+1) .ic { background: var(--c); }
+    .grid-3 .card:nth-child(3n+2) .ic { background: var(--ink); }
+    .grid-3 .card:nth-child(3n) .ic { background: var(--orange); }
+    .card h3 { font-size: 19px; margin-bottom: 9px; }
+    .card p { font-size: 14.5px; color: #463f33; font-weight: 500; }
+
+    .how { background: var(--ink); color: var(--bg); border-top: var(--bd); border-bottom: var(--bd); }
+    .how .sec-kicker { background: var(--c); color: #fff; }
+    .how .sec-head h2 { color: var(--bg); }
+    .how .sec-head p { color: #cfc7b6; }
+    .steps3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: s; }
+    .step { border: 2.5px solid var(--bg); border-radius: 18px; padding: 28px 24px; }
+    .step .n { counter-increment: s; width: 46px; height: 46px; border-radius: 12px; background: var(--c); color: #fff; font-family: var(--disp); font-weight: 800; font-size: 21px; display: grid; place-items: center; margin-bottom: 16px; border: 2.5px solid var(--bg); }
+    .step .n::before { content: counter(s); }
+    .step h3 { font-size: 18px; margin-bottom: 8px; }
+    .step p { font-size: 14px; opacity: .82; }
+
+    .cta-box { background: var(--c); color: #fff; border: var(--bd); border-radius: 30px; box-shadow: var(--shadow-lg); padding: 70px 44px; text-align: center; position: relative; overflow: hidden; }
+    .cta-box h2 { font-weight: 800; font-size: clamp(30px, 5vw, 58px); line-height: .98; margin-bottom: 16px; position: relative; z-index: 2; }
+    .cta-box p { font-size: 18px; font-weight: 500; max-width: 500px; margin: 0 auto 34px; position: relative; z-index: 2; }
+    .cta-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; position: relative; z-index: 2; }
+
+    footer { background: var(--bg2); border-top: var(--bd); padding: 48px 0 26px; }
+    .foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; padding-bottom: 24px; border-bottom: var(--bd); margin-bottom: 20px; }
+    .foot-row .brand-txt { font-size: 22px; }
+    .foot-row small { font-size: 13px; color: #5a5142; font-weight: 500; }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 20px; }
+    .foot-links a { font-size: 14.5px; font-weight: 500; color: #463f33; transition: color .12s; }
+    .foot-links a:hover { color: var(--c-deep); }
+    .foot-bottom { font-size: 13px; color: #5a5142; font-weight: 500; }
+
+    .wa-float { position: fixed; right: 22px; bottom: 22px; z-index: 60; width: 62px; height: 62px; border-radius: 50%; background: #25D366; border: var(--bd); box-shadow: var(--shadow); display: grid; place-items: center; transition: transform .15s; }
+    .wa-float:hover { transform: translate(-2px,-2px) rotate(-6deg); box-shadow: 7px 7px 0 var(--ink); }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s cubic-bezier(.2,.7,.3,1), transform .6s cubic-bezier(.2,.7,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+      .grid-3, .steps3 { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: var(--bg); border-bottom: var(--bd); padding: 20px 28px; gap: 18px; }
+      .nav-toggle { display: block; }
+      .nav-cta .btn:not(.btn-c) { display: none; }
+      .brand .brand-txt { display: none; }
+      .grid-3, .steps3 { grid-template-columns: 1fr; }
+      .comps { max-width: 320px; margin: 0 auto; }
+      section.block { padding: 64px 0; }
+      .marquee-track span { font-size: 17px; }
+      .cta-box { padding: 50px 26px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap nav-inner">
+      <div class="nav-left">
+        <a href="../" class="back-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> KAVY CORP</a>
+        <a href="#top" class="brand">
+          <svg class="brand-icon" viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="9" fill="#1FA84B"/><path d="M19 6l4.4 9 9.6 1.3-7 6.9L27.7 33 19 28.5 10.3 33 12 23.2l-7-6.9 9.6-1.3z" fill="none" stroke="#15110C" stroke-width="2.2" stroke-linejoin="round"/></svg>
+          <div class="brand-txt">KAVY Check<small>Pagos</small></div>
+        </a>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#funciones">Funciones</a>
+        <a href="#como">Cómo funciona</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#contacto" class="btn">Acceso</a>
+        <a href="https://wa.me/573005768886?text=Hola%20KAVY%20CORP%2C%20quiero%20información%20sobre%20KAVY%20Check" class="btn btn-c" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menú"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      </div>
+    </div>
+  </header>
+  <span id="top"></span>
+
+  <section class="hero">
+    <div class="shape" style="top:46px;right:3%;animation:spin 30s linear infinite" aria-hidden="true"><svg width="92" height="92" viewBox="0 0 92 92"><path d="M46 5l11 27 29 1-23 18 8 28-25-17-25 17 8-28L6 33l29-1z" fill="#FFC83D" stroke="#15110C" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-tag">✦ Protección contra fraude de pagos</span>
+          <h1>Detecta comprobantes <span class="hl">falsos al instante</span></h1>
+          <p class="hero-lead">KAVY Check valida comprobantes de Bancolombia en segundos con IA. Protege tu negocio antes de entregar el producto o servicio. Sin instalar nada.</p>
+          <div class="hero-actions">
+            <a href="#contacto" class="btn btn-c">Solicitar acceso</a>
+            <a href="https://wa.me/573005768886?text=Hola%20KAVY%20CORP%2C%20quiero%20probar%20KAVY%20Check" class="btn" target="_blank" rel="noopener">Escríbenos</a>
+          </div>
+        </div>
+
+        <div class="comps reveal" aria-hidden="true">
+          <div class="comp ok">
+            <div class="comp-h"><div class="comp-logo">B</div><div><b>Bancolombia</b><small>Comprobante</small></div></div>
+            <div class="comp-amt">$1.850.000</div>
+            <div class="comp-row"><span>Ref.</span><b>TXN-...-0042</b></div>
+            <div class="comp-row"><span>Hora</span><b>09:34 a.m.</b></div>
+            <div class="comp-row"><span>Estado</span><b>Aprobada</b></div>
+            <div class="verdict good"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2"><path d="M20 6L9 17l-5-5"/></svg> VERIFICADO</div>
+          </div>
+          <div class="comp bad">
+            <div class="comp-h"><div class="comp-logo">B</div><div><b>Bancolombia</b><small>Comprobante</small></div></div>
+            <div class="comp-amt">$2.200.000</div>
+            <div class="comp-row"><span>Ref.</span><b>TXN-...-0099</b></div>
+            <div class="comp-row"><span>Hora</span><b>11:18 a.m.</b></div>
+            <div class="comp-row"><span>Estado</span><b>Aprobada</b></div>
+            <div class="verdict evil"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2"><path d="M18 6L6 18M6 6l12 12"/></svg> FRAUDE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>VALIDA <i class="star">✦</i> DETECTA FRAUDE <i class="star">✦</i> PROTEGE TU CAJA <i class="star">✦</i> EN SEGUNDOS <i class="star">✦</i> SOLO BANCOLOMBIA <i class="star">✦</i></span>
+      <span>VALIDA <i class="star">✦</i> DETECTA FRAUDE <i class="star">✦</i> PROTEGE TU CAJA <i class="star">✦</i> EN SEGUNDOS <i class="star">✦</i> SOLO BANCOLOMBIA <i class="star">✦</i></span>
+    </div>
+  </div>
+
+  <section class="block" id="funciones">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-kicker">Funciones</span>
+        <h2>Cada comprobante verificado antes de que sea tarde</h2>
+        <p>Un solo fraude no detectado puede costarte más que meses de suscripción a KAVY Check.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><h3>Validación en segundos</h3><p>Sube la imagen del comprobante o pega el número de referencia. KAVY Check responde de inmediato si es válido.</p></div>
+        <div class="card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><h3>Detección de fraude con IA</h3><p>Analiza patrones, metadatos y firmas digitales. Detecta comprobantes editados, reusados o falsos.</p></div>
+        <div class="card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Solo Bancolombia</h3><p>Especializado 100% en el banco más usado en Colombia. No intentamos validar todo, lo hacemos bien para uno.</p></div>
+        <div class="card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></div><h3>Historial de verificaciones</h3><p>Cada consulta queda registrada con fecha, hora y resultado. Auditable y descargable cuando lo necesites.</p></div>
+        <div class="card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>Sin instalar nada</h3><p>Funciona desde cualquier navegador o celular. Tu equipo lo usa desde el primer día sin capacitación técnica.</p></div>
+        <div class="card reveal"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div><h3>Multi-usuario</h3><p>Tu equipo de caja, ventas o despacho consulta sin compartir contraseñas. Cada usuario con su acceso.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block how" id="como">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-kicker">Cómo funciona</span>
+        <h2 style="color:var(--bg)">Tres pasos para protegerte</h2>
+        <p>Más fácil que revisar el comprobante a mano, y mucho más confiable.</p>
+      </div>
+      <div class="steps3">
+        <div class="step reveal"><div class="n"></div><h3>El cliente envía el comprobante</h3><p>Por WhatsApp, correo o en persona. Tu equipo copia el número de referencia o sube la foto.</p></div>
+        <div class="step reveal"><div class="n"></div><h3>KAVY Check lo analiza</h3><p>La IA verifica la autenticidad, la referencia, el monto y los metadatos del documento en segundos.</p></div>
+        <div class="step reveal"><div class="n"></div><h3>Recibes el veredicto</h3><p>Verde = válido, entrega el producto. Rojo = fraude detectado, no entregues. Simple y claro.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contacto">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <div class="shape" style="top:-24px;left:34px;animation:spin 24s linear infinite reverse;opacity:.55" aria-hidden="true"><svg width="80" height="80" viewBox="0 0 80 80"><path d="M40 4l10 25 27 1-21 17 7 26-23-16-23 16 7-26L4 30l27-1z" fill="#FFC83D" stroke="#15110C" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+        <h2>¿Cuánto te ha costado<br>ya un comprobante falso?</h2>
+        <p>Con KAVY Check eso no vuelve a pasar. Solicita acceso y empieza a verificar hoy mismo.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/573005768886?text=Hola%20KAVY%20CORP%2C%20quiero%20acceso%20a%20KAVY%20Check" class="btn btn-ink" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>
+            Solicitar acceso
+          </a>
+          <a href="mailto:gerencia@kavycorp.com?subject=Quiero%20acceso%20a%20KAVY%20Check" class="btn">Enviar correo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-row">
+        <div><div class="brand-txt">KAVY Check</div><small>Un producto de <a href="../" style="color:var(--c-deep);font-weight:600">KAVY CORP</a></small></div>
+        <div class="foot-links">
+          <a href="../">KAVY CORP</a>
+          <a href="../logistics/">KAVY Logistics</a>
+          <a href="../crm/">KAVY CRM</a>
+          <a href="https://wa.me/573005768886" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:gerencia@kavycorp.com">Correo</a>
+        </div>
+      </div>
+      <div class="foot-bottom">© <span id="year"></span> KAVY CORP — Hecho en Colombia 🇨🇴</div>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/573005768886?text=Hola%20KAVY%20CORP%2C%20quiero%20información%20sobre%20KAVY%20Check" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>
+  </a>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
+    t.addEventListener('click', () => l.classList.toggle('open'));
+    l.querySelectorAll('a').forEach(a => a.addEventListener('click', () => l.classList.remove('open')));
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
